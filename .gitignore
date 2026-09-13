@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 测试与预览产物
+_preview.png
+_preview*.png
+*.part
+*.part.json
+
+# 编辑器
+.vscode/
+.idea/
+*.swp

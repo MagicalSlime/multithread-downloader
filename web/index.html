@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>多线程下载器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- 新建下载 -->
+  <section class="card new-download">
+    <div class="title-row">
+      <h1>新建下载</h1>
+      <button id="add" class="btn primary">立即下载</button>
+    </div>
+
+    <div class="field">
+      <label for="url">下载地址</label>
+      <input id="url" type="text" placeholder="粘贴或输入下载链接，回车即可开始" spellcheck="false">
+      <button id="paste" class="btn ghost">粘贴</button>
+    </div>
+
+    <div class="field">
+      <label for="save">保存到</label>
+      <input id="save" type="text" placeholder="留空则保存到「下载」文件夹" spellcheck="false">
+      <button id="browse" class="btn ghost">浏览…</button>
+    </div>
+
+    <div class="options">
+      <label for="threads">线程数</label>
+      <input id="threads" type="number" min="1" max="32" value="8">
+      <button id="resume" class="toggle on">断点续传</button>
+      <button id="tls" class="toggle">忽略证书错误</button>
+      <label for="retries">最大重试</label>
+      <input id="retries" type="number" min="0" max="20" value="5">
+      <span class="gap"></span>
+      <button id="advanced-toggle" class="btn ghost">▸ 高级设置</button>
+    </div>
+
+    <div id="advanced" class="advanced">
+      <div class="field">
+        <label for="ua">User-Agent</label>
+        <input id="ua" type="text" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="referer">Referer</label>
+        <input id="referer" type="text" spellcheck="false">
+      </div>
+      <div class="field">
+        <label for="cookie">Cookie</label>
+        <input id="cookie" type="text" spellcheck="false">
+        <span class="hint">仅本次运行有效，不写入配置文件</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 批量操作 -->
+  <section class="card toolbar">
+    <button id="start-all" class="btn">全部开始</button>
+    <button id="pause-all" class="btn">全部暂停</button>
+    <button id="clear-done" class="btn">清除已完成</button>
+    <span class="spacer"></span>
+    <label for="concurrent">同时下载</label>
+    <input id="concurrent" type="number" min="1" max="16" value="3">
+    <label for="rate">限速</label>
+    <select id="rate" class="rate-select"></select>
+  </section>
+
+  <div class="section-head" id="section-head">下载任务</div>
+
+  <!-- 任务列表 -->
+  <section class="list" id="list">
+    <div class="empty" id="empty">
+      还没有下载任务<br>把链接粘贴到上面，点「立即下载」
+    </div>
+  </section>
+
+  <!-- 日志 -->
+  <section class="card log-card">
+    <div class="log-head">
+      <span class="label">日志</span>
+      <span class="spacer"></span>
+      <button id="autoscroll" class="toggle on">自动滚动</button>
+      <button id="clear-log" class="btn mini">清空</button>
+    </div>
+    <pre id="log"></pre>
+  </section>
+</div>
+
+<!-- 确认弹窗（取消 / 移除共用，按钮由 JS 按场景配置） -->
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-text"></p>
+    <div class="actions">
+      <button class="btn ghost" id="modal-back"></button>
+      <button class="btn" id="modal-mid"></button>
+      <button class="btn danger" id="modal-main"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
